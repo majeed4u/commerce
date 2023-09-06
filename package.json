@@ -6,20 +6,38 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "json-server": "json-server --watch db.json --host --port 3001"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.23.5",
+    "@prisma/client": "^5.2.0",
+    "@radix-ui/react-slot": "^1.0.2",
     "@types/node": "20.5.9",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "date-fns": "^2.30.0",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
+    "json-server": "^0.17.3",
+    "lucide-react": "^0.274.0",
     "next": "13.4.19",
+    "next-cloudinary": "^4.20.0",
     "postcss": "8.4.29",
+    "query-string": "^8.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hot-toast": "^2.4.1",
+    "strapi-stripe": "^3.4.1",
+    "tailwind-merge": "^1.14.0",
     "tailwindcss": "3.3.3",
+    "tailwindcss-animate": "^1.0.7",
     "typescript": "5.2.2"
+  },
+  "devDependencies": {
+    "prisma": "^5.2.0"
   }
 }

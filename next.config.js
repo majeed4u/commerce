@@ -1,4 +1,14 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  images: {
+    domains: [
+      'static.nike.com',
+      'cdn.shopify.com',
+      'assets.adidas.com',
+      'assets.reebok.com',
+      'images.vans.com',
+    ],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
