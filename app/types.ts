@@ -11,3 +11,12 @@ export interface Products {
   slug: string;
   featured: boolean;
 }
+
+export interface ProfileProps {
+  id: string;
+  userId: string;
+  email: string;
+  role: string;
+  name: string;
+  imageUrl: string;
+}

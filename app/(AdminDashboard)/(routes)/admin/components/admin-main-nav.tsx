@@ -1,4 +1,5 @@
 'use client';
+import { ProfileProps } from '@/app/types';
 import { cn } from '@/lib/utils';
 import {
   LayoutDashboard,
@@ -11,14 +12,19 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-export default function AdminMainNav({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLElement>) {
+export default function AdminMainNav(
+  user: ProfileProps,
+  { className, ...props }: React.HTMLAttributes<HTMLElement>
+) {
   const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
 
-  const routes = [
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  let routes = [
     {
       href: '/admin',
       label: 'Dashboard',
@@ -55,6 +61,8 @@ export default function AdminMainNav({
       active: pathname === '/admin/products',
       icon: <ShoppingBasket />,
     },
+  ];
+  let userRoute = [
     {
       href: '/admin/users',
       label: 'Users',
@@ -63,6 +71,11 @@ export default function AdminMainNav({
     },
   ];
 
+  if (user?.role === 'ADMIN') {
+    routes = [...routes, ...userRoute];
+  }
+
+  if (!mounted) return null;
   return (
     <nav className={cn('flex flex-col  gap-y-4  ', className)}>
       {routes.map((route) => (
