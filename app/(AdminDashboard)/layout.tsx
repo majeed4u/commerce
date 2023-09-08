@@ -4,15 +4,16 @@ import AdminNav from './(routes)/admin/components/admin-nav';
 import AdminSidebar from './(routes)/admin/components/admin-sidebar';
 
 import Image from 'next/image';
+import { currentUser } from '@clerk/nextjs';
+import { db } from '@/lib/db';
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const user = await initialProfile();
-
-  if (user?.role === 'USER') {
-    redirect('/');
+  const profile = await initialProfile();
+  if (profile?.role !== 'ADMIN' && profile?.role !== 'SELLER') {
+    return redirect('/');
   }
   return (
     <div className=''>

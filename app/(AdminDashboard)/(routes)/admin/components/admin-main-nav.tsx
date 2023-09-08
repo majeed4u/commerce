@@ -1,5 +1,5 @@
 'use client';
-import { ProfileProps } from '@/app/types';
+
 import { cn } from '@/lib/utils';
 import {
   LayoutDashboard,
@@ -14,66 +14,68 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function AdminMainNav(
-  user: ProfileProps,
-  { className, ...props }: React.HTMLAttributes<HTMLElement>
-) {
+interface AdminNavProps {
+  profiles: any;
+  className?: string;
+  props?: React.HTMLAttributes<HTMLElement>;
+}
+
+export default function AdminMainNav({
+  profiles,
+  className,
+  ...props
+}: AdminNavProps) {
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
-  let routes = [
+
+  const routes = [
     {
+      id: 1,
       href: '/admin',
       label: 'Dashboard',
       active: pathname === '/admin',
       icon: <LayoutDashboard />,
     },
     {
+      id: 2,
       href: '/admin/genders',
       label: 'Genders',
       active: pathname === '/admin/genders',
       icon: <Ungroup />,
     },
     {
+      id: 3,
       href: '/admin/categories',
       label: 'Categories',
       active: pathname === '/admin/categories',
       icon: <Shapes />,
     },
     {
+      id: 4,
       href: '/admin/colors',
       label: 'Colors',
       active: pathname === '/admin/colors',
       icon: <Palette />,
     },
     {
+      id: 5,
       href: '/admin/sizes',
       label: 'Sizes',
       active: pathname === '/admin/sizes',
       icon: <Zap />,
     },
     {
+      id: 6,
       href: '/admin/products',
       label: 'Products',
       active: pathname === '/admin/products',
       icon: <ShoppingBasket />,
     },
   ];
-  let userRoute = [
-    {
-      href: '/admin/users',
-      label: 'Users',
-      active: pathname === '/admin/users',
-      icon: <Users />,
-    },
-  ];
-
-  if (user?.role === 'ADMIN') {
-    routes = [...routes, ...userRoute];
-  }
 
   if (!mounted) return null;
   return (
@@ -88,11 +90,27 @@ export default function AdminMainNav(
               ? ' text-gray-300 dark:text-white'
               : ' text-muted-foreground'
           )}
+          {...props}
         >
           {route.icon}
           {route.label}
         </Link>
       ))}
+      {profiles?.role !== 'SELLER' && (
+        <Link
+          href='/admin/users'
+          className={cn(
+            'text-xl font-medium transition-colors hover:text-primary flex items-center gap-x-2 pl-3',
+            pathname === '/admin/users'
+              ? ' text-gray-300 dark:text-white'
+              : ' text-muted-foreground'
+          )}
+          {...props}
+        >
+          <Users />
+          Users
+        </Link>
+      )}
     </nav>
   );
 }

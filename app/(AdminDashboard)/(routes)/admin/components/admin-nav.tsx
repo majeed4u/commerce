@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default function AdminNav() {
-  return <div>AdminNav</div>;
+  return <div className='mb-20 '>AdminNav</div>;
 }

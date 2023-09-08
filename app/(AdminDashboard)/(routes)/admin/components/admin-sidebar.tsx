@@ -1,14 +1,15 @@
 import React from 'react';
 import AdminMainNav from './admin-main-nav';
+
+import { currentUser } from '@clerk/nextjs';
+import { db } from '@/lib/db';
 import { initialProfile } from '@/lib/initial-profile';
-import { ProfileProps } from '@/app/types';
 
 export default async function AdminSidebar() {
-  const adminRole: ProfileProps = await initialProfile();
-  console.log(adminRole);
+  const profiles = await initialProfile();
   return (
     <div>
-      <AdminMainNav adminRole={adminRole} />
+      <AdminMainNav profiles={profiles} />
     </div>
   );
 }

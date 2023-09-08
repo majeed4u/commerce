@@ -1,3 +1,5 @@
+import { LucideIcon } from 'lucide-react';
+
 export interface Products {
   id: number;
   name: string;
@@ -18,5 +20,12 @@ export interface ProfileProps {
   email: string;
   role: string;
   name: string;
-  imageUrl: string;
+  imageUrl: string | null;
+}
+
+export interface RoutesProps {
+  label: string;
+  href: string;
+  active: boolean;
+  icon: JSX.Element;
 }

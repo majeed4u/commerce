@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
 
 export const PATCH = async (
   req: Request,
-  { params }: { params: { categoryId: string } }
+  { params }: { params: { genderId: string } }
 ) => {
   try {
     const admin = await initialProfile();
@@ -17,26 +17,25 @@ export const PATCH = async (
     if (profile?.role === 'USER') {
       return NextResponse.json('Unauthorized', { status: 401 });
     }
-    const { name, genderId } = await req.json();
+    const { name } = await req.json();
     if (!name) return NextResponse.json('Name is required', { status: 400 });
 
-    const category = await db.category.update({
+    const gender = await db.gender.update({
       where: {
-        id: params.categoryId,
+        id: params.genderId,
       },
       data: {
         name,
-        genderId,
       },
     });
-    return NextResponse.json(category, { status: 201 });
+    return NextResponse.json(gender, { status: 201 });
   } catch (error) {
     return NextResponse.json(`${error}, Server Error`, { status: 500 });
   }
 };
 export const DELETE = async (
   req: Request,
-  { params }: { params: { categoryId: string } }
+  { params }: { params: { genderId: string } }
 ) => {
   try {
     const admin = await initialProfile();
@@ -48,27 +47,27 @@ export const DELETE = async (
     if (profile?.role === 'USER') {
       return NextResponse.json('Unauthorized', { status: 401 });
     }
-    const category = await db.category.delete({
+    const gender = await db.gender.delete({
       where: {
-        id: params.categoryId,
+        id: params.genderId,
       },
     });
-    return NextResponse.json(category, { status: 200 });
+    return NextResponse.json(gender, { status: 200 });
   } catch (error) {
     return NextResponse.json(`${error}, Server Error`, { status: 500 });
   }
 };
 export const GET = async (
   req: Request,
-  { params }: { params: { categoryId: string } }
+  { params }: { params: { genderId: string } }
 ) => {
   try {
-    const category = await db.category.findUnique({
+    const gender = await db.gender.findUnique({
       where: {
-        id: params.categoryId,
+        id: params.genderId,
       },
     });
-    return NextResponse.json(category, { status: 200 });
+    return NextResponse.json(gender, { status: 200 });
   } catch (error) {
     return NextResponse.json(`${error}, Server Error`, { status: 500 });
   }
