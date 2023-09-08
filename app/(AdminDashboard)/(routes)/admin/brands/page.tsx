@@ -4,16 +4,15 @@ import AddNew from './components/add-new';
 import { db } from '@/lib/db';
 import { ColumnData } from './components/column';
 import { format } from 'date-fns';
-export default async function GendersPage() {
-  const colors = await db.color.findMany({
+export default async function BrandsPage() {
+  const brands = await db.brand.findMany({
     orderBy: {
       createdAt: 'desc',
     },
   });
-  const formattedData: ColumnData[] = colors.map((item) => ({
+  const formattedData: ColumnData[] = brands.map((item) => ({
     id: item.id,
     name: item.name,
-    value: item.value,
     createdAt: format(new Date(item.createdAt), 'MMM do,yyyy'),
   }));
   return (

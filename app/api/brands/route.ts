@@ -14,39 +14,23 @@ export const POST = async (req: Request) => {
     if (profile?.role === 'USER') {
       return NextResponse.json('Unauthorized', { status: 401 });
     }
-    const {
-      name,
-      description,
-      price,
-      brandId,
-      categoryId,
-      colorId,
-      sizeId,
-      imageUrl,
-    } = await req.json();
+    const { name } = await req.json();
     if (!name) return NextResponse.json('Name is required', { status: 400 });
 
-    const product = await db.product.create({
+    const brand = await db.brand.create({
       data: {
         name,
-        description,
-        price,
-        brandId,
-        categoryId,
-        sizeId,
-        colorId,
-        imageUrl,
       },
     });
-    return NextResponse.json(product, { status: 201 });
+    return NextResponse.json(brand, { status: 201 });
   } catch (error) {
     return NextResponse.json(`${error}, Server Error`, { status: 500 });
   }
 };
 export const GET = async (req: Request) => {
   try {
-    const product = await db.product.findMany();
-    return NextResponse.json(product, { status: 200 });
+    const brand = await db.brand.findMany();
+    return NextResponse.json(brand, { status: 200 });
   } catch (error) {
     return NextResponse.json(`${error}, Server Error`, { status: 500 });
   }

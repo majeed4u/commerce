@@ -2,6 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import {
+  Bitcoin,
   LayoutDashboard,
   Palette,
   Shapes,
@@ -67,6 +68,13 @@ export default function AdminMainNav({
       label: 'Sizes',
       active: pathname === '/admin/sizes',
       icon: <Zap />,
+    },
+    {
+      id: 5,
+      href: '/admin/brands',
+      label: 'Brands',
+      active: pathname === '/admin/brands',
+      icon: <Bitcoin />,
     },
     {
       id: 6,

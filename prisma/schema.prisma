@@ -23,7 +23,7 @@ model Profile {
 
 model Category {
   id        String    @id @default(uuid())
-  name      String    @unique
+  name      String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   genderId  String
@@ -69,18 +69,20 @@ model Product {
   id          String   @id @default(uuid())
   name        String
   description String
-  price       Float
+  imageUrl    String
+  price       Decimal
+  isNew       Boolean  @default(false)
+  isFeatured  Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   brandId     String
   brand       Brand    @relation(fields: [brandId], references: [id], onDelete: Cascade)
   categoryId  String
   category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-
-  color   Color  @relation(fields: [colorId], references: [id], onDelete: Cascade)
-  colorId String
-  size    Size   @relation(fields: [sizeId], references: [id], onDelete: Cascade)
-  sizeId  String
+  color       Color    @relation(fields: [colorId], references: [id], onDelete: Cascade)
+  colorId     String
+  size        Size     @relation(fields: [sizeId], references: [id], onDelete: Cascade)
+  sizeId      String
 }
 
 enum Role {
