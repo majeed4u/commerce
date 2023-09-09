@@ -11,14 +11,11 @@ export default async function ProductPage({
   const products = await db.product.findUnique({
     where: { id: params.productId },
   });
-  const categories = await db.category.findMany({
-    include: {
-      gender: true,
-    },
-  });
+  const categories = await db.category.findMany();
   const brands = await db.brand.findMany();
   const colors = await db.color.findMany();
   const sizes = await db.size.findMany();
+  const genders = await db.gender.findMany();
   return (
     <div className='max-w-screen-xl mx-auto '>
       <FormAction
@@ -27,6 +24,7 @@ export default async function ProductPage({
         categories={categories}
         brands={brands}
         sizes={sizes}
+        genders={genders}
       />
     </div>
   );

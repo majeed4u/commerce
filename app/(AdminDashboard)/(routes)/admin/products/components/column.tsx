@@ -12,6 +12,7 @@ export type ColumnData = {
   price: string;
   brand: string;
   category: string;
+  gender: string;
   color: string;
   size: string;
   isNew: boolean;
@@ -33,14 +34,20 @@ export const columns: ColumnDef<ColumnData>[] = [
     accessorKey: 'price',
     header: 'Price',
   },
+
   {
-    accessorKey: 'brand',
-    header: 'Brand',
+    accessorKey: 'gender',
+    header: 'Gender',
   },
   {
     accessorKey: 'category',
     header: 'Category',
   },
+  {
+    accessorKey: 'brand',
+    header: 'Brand',
+  },
+
   {
     accessorKey: 'color',
     header: 'Color',

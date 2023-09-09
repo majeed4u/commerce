@@ -15,6 +15,7 @@ export default async function CategoriesPage() {
       category: true,
       color: true,
       size: true,
+      gender: true,
     },
   });
 
@@ -27,6 +28,7 @@ export default async function CategoriesPage() {
     isFeatured: item.isFeatured,
     brand: item.brand.name,
     category: item.category.name,
+    gender: item.gender.name,
     color: item.color.value,
     size: item.size.value,
     createdAt: format(new Date(item.createdAt), 'MMM do,yyyy'),

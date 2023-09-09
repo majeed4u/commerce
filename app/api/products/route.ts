@@ -23,6 +23,7 @@ export const POST = async (req: Request) => {
       colorId,
       sizeId,
       imageUrl,
+      genderId,
     } = await req.json();
     if (!name) return NextResponse.json('Name is required', { status: 400 });
 
@@ -35,6 +36,7 @@ export const POST = async (req: Request) => {
         categoryId,
         sizeId,
         colorId,
+        genderId,
         imageUrl,
       },
     });

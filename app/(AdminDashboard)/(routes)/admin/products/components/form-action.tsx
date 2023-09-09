@@ -1,5 +1,5 @@
 'use client';
-import { Category, Color, Size, Brand, Product } from '@prisma/client';
+import { Category, Color, Size, Brand, Product, Gender } from '@prisma/client';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -10,6 +10,7 @@ import { useState } from 'react';
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -24,6 +25,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
+import ImageUpload from '@/components/image-upload';
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -32,9 +35,7 @@ const formSchema = z.object({
   description: z.string().min(1, {
     message: 'description is required',
   }),
-  imageUrl: z.string().min(1, {
-    message: 'imageUrl is required',
-  }),
+  imageUrl: z.string(),
 
   brandId: z.string().min(1, {
     message: 'BrandId is required',
@@ -44,6 +45,9 @@ const formSchema = z.object({
   }),
   categoryId: z.string().min(1, {
     message: 'categoryId is required',
+  }),
+  genderId: z.string().min(1, {
+    message: 'genderId is required',
   }),
   sizeId: z.string().min(1, {
     message: 'sizeId is required',
@@ -60,6 +64,7 @@ interface FormActionProps {
   colors: Color[];
   brands: Brand[];
   sizes: Size[];
+  genders: Gender[];
 }
 export default function FormAction({
   initialData,
@@ -67,9 +72,9 @@ export default function FormAction({
   colors,
   brands,
   sizes,
+  genders,
 }: FormActionProps) {
   const [loading, setLoading] = useState(false);
-  const params = useParams();
   const router = useRouter();
   const title = initialData ? 'edit product' : 'create product ';
   const action = initialData ? 'save changes' : 'create';
@@ -88,6 +93,7 @@ export default function FormAction({
           name: '',
           brandId: '',
           categoryId: '',
+          genderId: '',
           colorId: '',
           description: '',
           imageUrl: '',
@@ -116,11 +122,13 @@ export default function FormAction({
     }
   };
   return (
-    <div className='max-w-sm '>
+    <div className='w-full max-w-4xl '>
       <h1 className='mb-4 text-2xl font-semibold capitalize '>{title}</h1>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-          {' '}
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className='grid grid-cols-3 gap-4'
+        >
           <FormField
             control={form.control}
             name='name'
@@ -131,6 +139,65 @@ export default function FormAction({
                   <Input placeholder='Name' {...field} />
                 </FormControl>
 
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='description'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Input placeholder='Description' {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='price'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>price</FormLabel>
+                <FormControl>
+                  <Input type='number' placeholder='price' {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='genderId'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Gender</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  value={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue
+                        placeholder='Select a Gender'
+                        defaultValue={field.value}
+                      />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {genders.map((item) => (
+                      <SelectItem key={item.id} value={item.id}>
+                        {item.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}
@@ -162,6 +229,150 @@ export default function FormAction({
                     ))}
                   </SelectContent>
                 </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='colorId'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Color</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  value={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue
+                        placeholder='Select a color'
+                        defaultValue={field.value}
+                      />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {colors.map((item) => (
+                      <SelectItem key={item.id} value={item.id}>
+                        {item.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='sizeId'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Size</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  value={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue
+                        placeholder='Select a size'
+                        defaultValue={field.value}
+                      />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {sizes.map((item) => (
+                      <SelectItem key={item.id} value={item.id}>
+                        {item.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='brandId'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Brand</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  value={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue
+                        placeholder='Select a Brand'
+                        defaultValue={field.value}
+                      />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {brands.map((item) => (
+                      <SelectItem key={item.id} value={item.id}>
+                        {item.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='isFeatured'
+            render={({ field }) => (
+              <FormItem className='flex flex-row items-start p-4 space-x-3 space-y-0 border rounded-md shadow'>
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <div className='space-y-1 leading-none'>
+                  <FormLabel>Featured</FormLabel>
+                </div>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='isNew'
+            render={({ field }) => (
+              <FormItem className='flex flex-row items-start p-4 space-x-3 space-y-0 border rounded-md shadow'>
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <div className='space-y-1 leading-none'>
+                  <FormLabel>New Product</FormLabel>
+                </div>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='imageUrl'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Images</FormLabel>
+                <FormControl>
+                  <ImageUpload
+                    value={field.value}
+                    disabled={loading}
+                    onChange={(url) => field.onChange(url)}
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}

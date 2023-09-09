@@ -37,6 +37,7 @@ model Gender {
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   categories Category[]
+  Product    Product[]
 }
 
 model Brand {
@@ -83,6 +84,8 @@ model Product {
   colorId     String
   size        Size     @relation(fields: [sizeId], references: [id], onDelete: Cascade)
   sizeId      String
+  genderId    String
+  gender      Gender   @relation(fields: [genderId], references: [id], onDelete: Cascade)
 }
 
 enum Role {
