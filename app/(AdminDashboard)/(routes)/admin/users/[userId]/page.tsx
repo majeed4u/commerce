@@ -3,18 +3,18 @@ import AddNew from '../components/add-new';
 import { db } from '@/lib/db';
 import FormAction from '../components/form-action';
 
-export default async function CategoryPage({
+export default async function UserPage({
   params,
 }: {
-  params: { categoryId: string };
+  params: { userId: string };
 }) {
-  const categories = await db.category.findUnique({
-    where: { id: params.categoryId },
+  const users = await db.profile.findUnique({
+    where: { id: params.userId },
   });
 
   return (
     <div className='max-w-screen-xl mx-auto '>
-      <FormAction initialData={categories} />
+      <FormAction initialData={users} />
     </div>
   );
 }

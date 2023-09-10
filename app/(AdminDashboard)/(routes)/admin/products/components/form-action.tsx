@@ -53,8 +53,8 @@ const formSchema = z.object({
     message: 'sizeId is required',
   }),
   price: z.coerce.number(),
-  isNew: z.boolean(),
-  isFeatured: z.boolean(),
+  isNew: z.boolean().default(false).optional(),
+  isFeatured: z.boolean().default(false).optional(),
 });
 
 type formValues = z.infer<typeof formSchema>;

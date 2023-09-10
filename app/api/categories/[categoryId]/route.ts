@@ -17,7 +17,7 @@ export const PATCH = async (
     if (profile?.role === 'USER') {
       return NextResponse.json('Unauthorized', { status: 401 });
     }
-    const { name, genderId } = await req.json();
+    const { name } = await req.json();
     if (!name) return NextResponse.json('Name is required', { status: 400 });
 
     const category = await db.category.update({
@@ -26,7 +26,6 @@ export const PATCH = async (
       },
       data: {
         name,
-        genderId,
       },
     });
     return NextResponse.json(category, { status: 201 });

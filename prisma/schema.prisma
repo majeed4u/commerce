@@ -23,21 +23,18 @@ model Profile {
 
 model Category {
   id        String    @id @default(uuid())
-  name      String
+  name      String    @unique
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  genderId  String
-  gender    Gender    @relation(fields: [genderId], references: [id], onDelete: Cascade)
   products  Product[]
 }
 
 model Gender {
-  id         String     @id @default(uuid())
-  name       String     @unique
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  categories Category[]
-  Product    Product[]
+  id        String    @id @default(uuid())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Product   Product[]
 }
 
 model Brand {

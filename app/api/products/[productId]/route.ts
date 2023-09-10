@@ -27,6 +27,8 @@ export const PATCH = async (
       sizeId,
       genderId,
       imageUrl,
+      isFeatured,
+      isNew,
     } = await req.json();
     if (!name) return NextResponse.json('Name is required', { status: 400 });
 
@@ -44,6 +46,8 @@ export const PATCH = async (
         sizeId,
         genderId,
         imageUrl,
+        isFeatured,
+        isNew,
       },
     });
     return NextResponse.json(product, { status: 201 });

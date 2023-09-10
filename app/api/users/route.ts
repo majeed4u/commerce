@@ -14,23 +14,26 @@ export const POST = async (req: Request) => {
     if (profile?.role === 'USER') {
       return NextResponse.json('Unauthorized', { status: 401 });
     }
-    const { name } = await req.json();
+    const { name, role, email, userId } = await req.json();
     if (!name) return NextResponse.json('Name is required', { status: 400 });
 
-    const category = await db.category.create({
+    const users = await db.profile.create({
       data: {
         name,
+        role,
+        email,
+        userId,
       },
     });
-    return NextResponse.json(category, { status: 201 });
+    return NextResponse.json(users, { status: 201 });
   } catch (error) {
     return NextResponse.json(`${error}, Server Error`, { status: 500 });
   }
 };
 export const GET = async (req: Request) => {
   try {
-    const category = await db.category.findMany();
-    return NextResponse.json(category, { status: 200 });
+    const profile = await db.profile.findMany();
+    return NextResponse.json(profile, { status: 200 });
   } catch (error) {
     return NextResponse.json(`${error}, Server Error`, { status: 500 });
   }
