@@ -1,6 +1,7 @@
 import { db } from '@/lib/db';
 import { initialProfile } from '@/lib/initial-profile';
 import { currentUser } from '@clerk/nextjs';
+import { ca } from 'date-fns/locale';
 import { NextResponse } from 'next/server';
 
 export const POST = async (req: Request) => {
@@ -50,10 +51,44 @@ export const POST = async (req: Request) => {
   }
 };
 export const GET = async (req: Request) => {
+  const { searchParams } = new URL(req.url);
+  const categoryId = searchParams.get('categoryId');
+  const colorId = searchParams.get('colorId');
+  const sizeId = searchParams.get('sizeId');
+  const isFeatured = searchParams.get('isFeatured ');
+  const isNew = searchParams.get('isNew');
+  const genderId = searchParams.get('genderId');
+  const brandId = searchParams.get('brandId');
+  const price = searchParams.get('price');
+  const name = searchParams.get('name');
+
   try {
-    const product = await db.product.findMany();
+    const product = await db.product.findMany({
+      where: {
+        categoryId: categoryId ? categoryId : undefined,
+        colorId: colorId ? colorId : undefined,
+        sizeId: sizeId ? sizeId : undefined,
+        isFeatured: isFeatured ? true : undefined,
+        isNew: isNew ? true : undefined,
+        genderId: genderId ? genderId : undefined,
+        brandId: brandId ? brandId : undefined,
+        price: price ? price : undefined,
+        name: name ? name : undefined,
+      },
+      include: {
+        color: true,
+        category: true,
+        size: true,
+        brand: true,
+        gender: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
     return NextResponse.json(product, { status: 200 });
   } catch (error) {
+    console.log(error);
     return NextResponse.json(`${error}, Server Error`, { status: 500 });
   }
 };

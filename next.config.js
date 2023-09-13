@@ -7,6 +7,7 @@ const nextConfig = {
       'assets.adidas.com',
       'assets.reebok.com',
       'images.vans.com',
+      'res.cloudinary.com',
     ],
   },
 };

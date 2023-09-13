@@ -1,5 +1,6 @@
-export const getProduct = async (id: number) => {
-  const response = await fetch(`http://localhost:3001/products/${id}`);
+const URL = 'http://localhost:3000/api/products';
+export const getProduct = async (id: string) => {
+  const response = await fetch(`${URL}/${id}`);
   const products = await response.json();
   return products;
 };

@@ -1,17 +1,19 @@
+import { Brand, Category, Color, Gender, Size } from '@prisma/client';
 import { LucideIcon } from 'lucide-react';
 
 export interface Products {
-  id: number;
+  id: string;
   name: string;
-  brand: string;
-  gender: string;
-  category: string;
+  brand: Brand;
+  gender: Gender;
+  category: Category;
   price: number;
-  is_in_inventory: boolean;
-  items_left: number;
-  imageURL: string;
-  slug: string;
-  featured: boolean;
+  isFeatured: boolean;
+  imageUrl: string;
+  isNew: boolean;
+  color: Color;
+  description: string;
+  size: Size;
 }
 
 export interface ProfileProps {

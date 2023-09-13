@@ -88,6 +88,13 @@ export const GET = async (
       where: {
         id: params.productId,
       },
+      include: {
+        color: true,
+        category: true,
+        size: true,
+        brand: true,
+        gender: true,
+      },
     });
     return NextResponse.json(product, { status: 200 });
   } catch (error) {

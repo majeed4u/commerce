@@ -13,8 +13,8 @@ interface ModalProps {
   children: React.ReactNode;
   isOpen: boolean;
   onClose: () => void;
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
 }
 
 export default function Modal({
